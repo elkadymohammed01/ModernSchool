@@ -1,0 +1,43 @@
+{% extends 'school_person/base.html' %}
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">
+            Add Student
+        </h5>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Name</label>
+            <div class="col-sm-10">
+            {{ form.name }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Age</label>
+            <div class="col-sm-10">
+            {{ form.age }}
+            </div>
+        </div>
+        <div class="row mb-2">
+            <label class="col-sm-2 col-form-label">Class</label>
+            <div class="col-sm-10">
+            {{ form.class_name }}
+            </div>
+        </div>
+        <div class="row mb-2">
+            <label class="col-sm-2 col-form-label">Level</label>
+            <div class="col-sm-10">
+            {{ form.level }}
+            </div>
+        </div>
+        <div class="row mb-2">
+            <label class="col-sm-2 col-form-label">Student Type</label>
+            <div class="col-sm-10">
+            {{ form.type }}
+            </div>
+        </div>
+        <div class="row mb-2" style="margin-bottom: 5px; margin-top: 15px; margin-inline-start: 220px; margin-right: 80px;">
+            <button class="btn btn-primary" type="submit"> Add Student</button>
+        </div>
+    </div>
+</div>
+{% endblock content %}

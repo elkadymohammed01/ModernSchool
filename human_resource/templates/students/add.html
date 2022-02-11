@@ -1,0 +1,488 @@
+{% extends 'school_person/base.html' %}
+{% block content %}
+    <div class="pagetitle">
+      <h1>Human Resources</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a >Students Affairs</a></li>
+          <li class="breadcrumb-item active">add student</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title '''''''''''''''''''''-->
+    <div class="dropdown col-12 mb-2">
+        <h3 id="dropdownMenuButton1"
+                class="btn mb-2 nav-lik col-12"
+                data-bs-toggle="collapse"
+                data-bs-target="#add-student-nav"
+                style="background-color:#F67280;"
+                aria-expanded="true">
+            Add Student
+        </h3>
+        <div id="add-student-nav"
+             class="nav-content collapse col-12 "
+             data-bs-parent="#sidebar-nav"
+             aria-labelledby="dropdownMenuButton1">
+            <form method="get">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            Add Student
+                        </h5>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Name</label>
+                            <div class="col-sm-10">
+                            {{ form.name }}
+                            </div>
+                        </div>
+                         <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Phone</label>
+                            <div class="col-sm-10">
+                            {{ form.phone }}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Age</label>
+                            <div class="col-sm-10">
+                            {{ form.age }}
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <label class="col-sm-2 col-form-label">Class</label>
+                            <div class="col-sm-10">
+                            {{ form.class_name }}
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <label class="col-sm-2 col-form-label">Level</label>
+                            <div class="col-sm-10">
+                            {{ form.level }}
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <label class="col-sm-2 col-form-label">Student Type</label>
+                            <div class="col-sm-10">
+                            {{ form.type }}
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-primary col-4" type="submit"> Add Student</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="dropdown col-12 mb-2">
+        <h3 id="dropdownMenuButton1"
+                class="btn mb-2 nav-lik col-12"
+                data-bs-toggle="collapse"
+                data-bs-target="#student-inf-nav"
+                style="background-color:#f8b195;"
+                aria-expanded="true">
+            Search Student
+        </h3>
+        <div id="student-inf-nav"
+             class="nav-content collapse show col-12 table-responsive"
+             data-bs-parent="#sidebar-nav"
+             aria-labelledby="dropdownMenuButton1">
+        <form method="post">
+            {% csrf_token %}
+             <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            Search Student
+                        </h5>
+                        <div class="row mb-3">
+                            <label class="row-sm-2 col-form-label">Name</label>
+                            <div class="row-sm-10">
+                            {{ form.name }}
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col">
+                                <label class="col-sm-3 col-form-label">Level</label>
+                                <div class="col-sm-12">
+                                    {{ form.level }}
+                                </div>
+                            </div>
+                            <div class="col">
+                                    <label class="col-sm-3 col-form-label">Class</label>
+                                    <div class="col-sm-12">
+                                        {{ form.class_name }}
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-warning  col-4" type="submit">Search</button>
+                        </div>
+                    </div>
+             </div>
+        </form>
+        {% if students %}
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            name
+                        </th>
+                        <th>
+                            class
+                        </th>
+                        <th>
+                            level
+                        </th>
+                        <th>
+                            age
+                        </th>
+                        <th>
+                            result
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                        <tr>
+                            <td>
+                                {{ student.name }}
+                            </td>
+                            <td>
+                                {{ student.class_name }}
+                            </td>
+                            <td>
+                                {{ student.level }}
+                            </td>
+                            <td>
+                                {{ student.birth_day }}
+                            </td>
+                            <td>
+                                {{ result.pop }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+        </div>
+    </div>
+    <div class="section dashboard">
+        <div class="row">
+            {% for class in class_at_level %}
+                <div class="col-xxl-2 col-md-4">
+                    <div class=" card info-card sales-card">
+                        <div class="card-body">
+                          <h5 class="card-title">Student <span>| Level {{ class.level }}</span></h5>
+                          <div class="d-flex align-items-center">
+                              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                  <i class="bx {{ class.icon }}"></i>
+                              </div>
+                            <div class="ps-3">
+                              <h6>{{ class.count }}</h6>
+                              <span class="text-success small pt-1 fw-bold"></span> <span class="text-muted small pt-2 ps-1">at School</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+
+            <div class="col-lg-8">
+            {% for student in first_student %}
+                {% if student.Level != 0 %}
+                  <div class="card info-card customers-card">
+                    <div class="card-body">
+                      <h5 class="card-title">Level {{ student.level }} <span>| {{ student.class}}</span></h5>
+
+                      <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                          <i class="bi bi-people"></i>
+                        </div>
+                        <div class="ps-3">
+                          <h6>{{ student.name }}</h6>
+                          <span class="{% if student.degree >= 80 %}text-success{% elif student.degree >= 70%}text-primary{% else %}text-danger{% endif %} small pt-1 fw-bold">
+                              {{ student.degree }}%
+                          </span>
+                          <span class="text-muted small pt-2 ps-1">
+                                {% if student.degree >= 80 %}Excellent{% elif student.degree >= 70%}Very Good{% else %}Good{% endif %}
+                            </span>
+
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                {% endif %}
+            {% endfor %}
+            </div>
+         <div class="col-lg-4">
+             <div class="card">
+
+            <div class="filter">
+              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                <li class="dropdown-header text-start">
+                  <h6>Filter</h6>
+                </li>
+
+                <li><a class="dropdown-item" href="#">Today</a></li>
+                <li><a class="dropdown-item" href="#">This Month</a></li>
+                <li><a class="dropdown-item" href="#">This Year</a></li>
+              </ul>
+            </div>
+
+            <div class="card-body">
+              <h5 class="card-title">Recent Activity <span>| Today</span></h5>
+
+              <div class="activity">
+
+                <div class="activity-item d-flex">
+                  <div class="activite-label">32 min</div>
+                  <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                  <div class="activity-content">
+                    Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a> beatae
+                  </div>
+                </div><!-- End activity item-->
+
+                <div class="activity-item d-flex">
+                  <div class="activite-label">56 min</div>
+                  <i class="bi bi-circle-fill activity-badge text-danger align-self-start"></i>
+                  <div class="activity-content">
+                    Voluptatem blanditiis blanditiis eveniet
+                  </div>
+                </div><!-- End activity item-->
+
+                <div class="activity-item d-flex">
+                  <div class="activite-label">2 hrs</div>
+                  <i class="bi bi-circle-fill activity-badge text-primary align-self-start"></i>
+                  <div class="activity-content">
+                    Voluptates corrupti molestias voluptatem
+                  </div>
+                </div><!-- End activity item-->
+
+                <div class="activity-item d-flex">
+                  <div class="activite-label">1 day</div>
+                  <i class="bi bi-circle-fill activity-badge text-info align-self-start"></i>
+                  <div class="activity-content">
+                    Tempore autem saepe <a href="#" class="fw-bold text-dark">occaecati voluptatem</a> tempore
+                  </div>
+                </div><!-- End activity item-->
+
+                <div class="activity-item d-flex">
+                  <div class="activite-label">2 days</div>
+                  <i class="bi bi-circle-fill activity-badge text-warning align-self-start"></i>
+                  <div class="activity-content">
+                    Est sit eum reiciendis exercitationem
+                  </div>
+                </div><!-- End activity item-->
+
+                <div class="activity-item d-flex">
+                  <div class="activite-label">4 weeks</div>
+                  <i class="bi bi-circle-fill activity-badge text-muted align-self-start"></i>
+                  <div class="activity-content">
+                    Dicta dolorem harum nulla eius. Ut quidem quidem sit quas
+                  </div>
+                </div><!-- End activity item-->
+
+              </div>
+
+            </div>
+
+             </div>
+             <div class="card">
+
+            <div class="filter">
+              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                <li class="dropdown-header text-start">
+                  <h6>Filter</h6>
+                </li>
+
+                <li><a class="dropdown-item" href="#">Today</a></li>
+                <li><a class="dropdown-item" href="#">This Month</a></li>
+                <li><a class="dropdown-item" href="#">This Year</a></li>
+              </ul>
+            </div>
+
+            <div class="card-body pb-0">
+              <h5 class="card-title">Budget Report <span>| This Month</span></h5>
+
+              <div id="budgetChart" style="min-height: 400px; user-select: none;" class="echart" _echarts_instance_="ec_1644617212228"><div style="position: relative; width: 252px; height: 400px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas style="position: absolute; left: 0px; top: 0px; width: 252px; height: 400px; user-select: none; padding: 0px; margin: 0px; border-width: 0px;" data-zr-dom-id="zr_0" width="252" height="400"></canvas><div style="position: absolute !important; visibility: hidden !important; padding: 0px !important; margin: 0px !important; border-width: 0px !important; user-select: none !important; width: 0px !important; height: 0px !important; inset: 0px auto auto 0px !important;"></div><div style="position: absolute !important; visibility: hidden !important; padding: 0px !important; margin: 0px !important; border-width: 0px !important; user-select: none !important; width: 0px !important; height: 0px !important; inset: 0px 0px auto auto !important;"></div><div style="position: absolute !important; visibility: hidden !important; padding: 0px !important; margin: 0px !important; border-width: 0px !important; user-select: none !important; width: 0px !important; height: 0px !important; inset: auto auto 0px 0px !important;"></div><div style="position: absolute !important; visibility: hidden !important; padding: 0px !important; margin: 0px !important; border-width: 0px !important; user-select: none !important; width: 0px !important; height: 0px !important; inset: auto 0px 0px auto !important;"></div></div></div>
+
+              <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                  var budgetChart = echarts.init(document.querySelector("#budgetChart")).setOption({
+                    legend: {
+                      data: ['Allocated Budget', 'Actual Spending']
+                    },
+                    radar: {
+                      // shape: 'circle',
+                      indicator: [{
+                          name: 'Sales',
+                          max: 6500
+                        },
+                        {
+                          name: 'Administration',
+                          max: 16000
+                        },
+                        {
+                          name: 'Information Technology',
+                          max: 30000
+                        },
+                        {
+                          name: 'Customer Support',
+                          max: 38000
+                        },
+                        {
+                          name: 'Development',
+                          max: 52000
+                        },
+                        {
+                          name: 'Marketing',
+                          max: 25000
+                        }
+                      ]
+                    },
+                    series: [{
+                      name: 'Budget vs spending',
+                      type: 'radar',
+                      data: [{
+                          value: [4200, 3000, 20000, 35000, 50000, 18000],
+                          name: 'Allocated Budget'
+                        },
+                        {
+                          value: [5000, 14000, 28000, 26000, 42000, 21000],
+                          name: 'Actual Spending'
+                        }
+                      ]
+                    }]
+                  });
+                });
+              </script>
+
+            </div>
+
+             </div>
+            <div class="card">
+            <div class="filter">
+              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                <li class="dropdown-header text-start">
+                  <h6>Filter</h6>
+                </li>
+
+                <li><a class="dropdown-item" href="#">Today</a></li>
+                <li><a class="dropdown-item" href="#">This Month</a></li>
+                <li><a class="dropdown-item" href="#">This Year</a></li>
+              </ul>
+            </div>
+
+            <div class="card-body pb-0">
+              <h5 class="card-title">News &amp; Updates <span>| Today</span></h5>
+
+              <div class="news">
+                <div class="post-item clearfix">
+                  <img src="assets/img/news-1.jpg" alt="">
+                  <h4><a href="#">Nihil blanditiis at in nihil autem</a></h4>
+                  <p>Sit recusandae non aspernatur laboriosam. Quia enim eligendi sed ut harum...</p>
+                </div>
+
+                <div class="post-item clearfix">
+                  <img src="assets/img/news-2.jpg" alt="">
+                  <h4><a href="#">Quidem autem et impedit</a></h4>
+                  <p>Illo nemo neque maiores vitae officiis cum eum turos elan dries werona nande...</p>
+                </div>
+
+                <div class="post-item clearfix">
+                  <img src="assets/img/news-3.jpg" alt="">
+                  <h4><a href="#">Id quia et et ut maxime similique occaecati ut</a></h4>
+                  <p>Fugiat voluptas vero eaque accusantium eos. Consequuntur sed ipsam et totam...</p>
+                </div>
+
+                <div class="post-item clearfix">
+                  <img src="assets/img/news-4.jpg" alt="">
+                  <h4><a href="#">Laborum corporis quo dara net para</a></h4>
+                  <p>Qui enim quia optio. Eligendi aut asperiores enim repellendusvel rerum cuder...</p>
+                </div>
+
+                <div class="post-item clearfix">
+                  <img src="assets/img/news-5.jpg" alt="">
+                  <h4><a href="#">Et dolores corrupti quae illo quod dolor</a></h4>
+                  <p>Odit ut eveniet modi reiciendis. Atque cupiditate libero beatae dignissimos eius...</p>
+                </div>
+
+              </div><!-- End sidebar recent posts-->
+
+            </div>
+                </div>
+         </div>
+        </div>
+        <div class="card">
+            <div class="card-body pb-0">
+              <h5 class="card-title">School Percentage of Students at all Subject <span>| for all level</span></h5>
+
+              <div id="trafficChart" style="min-height: 400px; user-select: none; position: relative;" class="echart" _echarts_instance_="ec_1644611639397"><div style="position: relative; width: 252px; height: 400px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas style="position: absolute; left: 0px; top: 0px; width: 252px; height: 400px; user-select: none; padding: 0px; margin: 0px; border-width: 0px;" data-zr-dom-id="zr_0" width="252" height="400"></canvas></div><div class="" style="position: absolute; display: block; border-style: solid; white-space: nowrap; z-index: 9999999; box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 10px; transition: opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1) 0s, visibility 0.2s cubic-bezier(0.23, 1, 0.32, 1) 0s, transform 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s; background-color: rgb(255, 255, 255); border-width: 1px; border-radius: 4px; color: rgb(102, 102, 102); font: 14px / 21px sans-serif; padding: 10px; top: 0px; left: 0px; transform: translate3d(-51px, 145px, 0px); border-color: rgb(115, 192, 222); pointer-events: none; visibility: hidden; opacity: 0;"><div style="margin: 0px 0 0;line-height:1;"><div style="font-size:14px;color:#666;font-weight:400;line-height:1;">Access From</div><div style="margin: 10px 0 0;line-height:1;"><div style="margin: 0px 0 0;line-height:1;"><span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#73c0de;"></span><span style="font-size:14px;color:#666;font-weight:400;margin-left:2px">Video Ads</span><span style="float:right;margin-left:20px;font-size:14px;color:#666;font-weight:900">300</span><div style="clear:both"></div></div><div style="clear:both"></div></div><div style="clear:both"></div></div></div></div>
+
+            </div>
+        </div>
+    </div>
+<script>
+                document.addEventListener("DOMContentLoaded", () => {
+                  echarts.init(document.querySelector("#trafficChart")).setOption({
+                    tooltip: {
+                      trigger: 'item'
+                    },
+                    legend: {
+                      top: '5%',
+                      left: 'center'
+                    },
+                    series: [{
+                      name: 'Student Percentage',
+                      type: 'pie',
+                      radius: ['40%', '70%'],
+                      avoidLabelOverlap: false,
+                      label: {
+                        show: false,
+                        position: 'center'
+                      },
+                      emphasis: {
+                        label: {
+                          show: true,
+                          fontSize: '18',
+                          fontWeight: 'bold'
+                        }
+                      },
+                      labelLine: {
+                        show: false
+                      },
+                      data: [{
+                          value: {{ percentage.0.count }},
+                          name: 'Very Bad'
+                        },
+                        {
+                          value: {{percentage.1.count}},
+                          name: 'Bad'
+                        },
+                        {
+                          value: {{percentage.2.count}},
+                          name: 'Good'
+                        },
+                        {
+                          value: {{percentage.3.count}},
+                          name: 'Very Good'
+                        },
+                        {
+                          value: {{percentage.4.count}},
+                          name: 'Excellent'
+                        },
+                        {
+                          value: {{percentage.5.count}},
+                          name: 'Magic'
+                        }
+                      ]
+                    }]
+                  });
+                });
+              </script>
+{% endblock content %}
